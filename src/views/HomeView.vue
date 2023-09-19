@@ -1,9 +1,10 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import Example from "../components/Example.vue";
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <h1>BIENVENUE SUR HOME</h1>
+    <!-- <Example surnom="gerard" user="David" age="150" /> -->
   </main>
 </template>

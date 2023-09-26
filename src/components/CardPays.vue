@@ -28,6 +28,9 @@ onMounted(() => {
   flex-direction: column;
   min-height: 10em;
 
+  border-radius: 8px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
   /* width: 30%; */
 }
 

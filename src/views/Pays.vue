@@ -16,11 +16,20 @@ const listePays = [
 ];
 
 let data = ref("");
+let search = ref("");
+let searchResult = ref("");
 
 onMounted(async () => {
   const response = await axios.get("src/curl/countries.json");
   data.value = response.data;
+  searchResult.value = data.value;
 });
+
+const searching = () => {
+  searchResult.value = data.value.filter((pays) => {
+    return pays.name.common.toLowerCase().includes(search.value.toLowerCase());
+  });
+};
 </script>
 
 <template>
@@ -35,8 +44,13 @@ onMounted(async () => {
         </div>
       </div>
     </div> -->
+
+    <div>
+      <input type="text" v-model="search" v-on:keyup="searching" />
+      <!-- <button v-on:click="searching">Rechercher</button> -->
+    </div>
     <div class="container">
-      <div v-for="pays in data">
+      <div v-for="pays in searchResult">
         <CardPays :pays="pays" />
       </div>
     </div>

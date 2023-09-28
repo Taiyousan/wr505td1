@@ -30,6 +30,13 @@ const searching = () => {
     return pays.name.common.toLowerCase().includes(search.value.toLowerCase());
   });
 };
+
+// à finir
+const selectSuggestion = (pays) => {
+  searchResult.value = data.value.filter((pays) => {
+    return pays.name.common.toLowerCase().includes(search.value.toLowerCase());
+  });
+};
 </script>
 
 <template>
@@ -46,8 +53,19 @@ const searching = () => {
     </div> -->
 
     <div>
-      <input type="text" v-model="search" v-on:keyup="searching" />
-      <!-- <button v-on:click="searching">Rechercher</button> -->
+      <div class="search-container">
+        <input type="text" v-model="search" v-on:keyup="searching" />
+        <div v-if="search && searchResult.length" class="suggestions">
+          <div
+            v-for="pays in searchResult"
+            :key="pays.cca3"
+            class="suggestion-item"
+            @click="searchSuggestions(pays)"
+          >
+            {{ pays.name.common }}
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container">
       <div v-for="pays in searchResult">

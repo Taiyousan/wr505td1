@@ -18,7 +18,7 @@ const listePays = [
 let data = ref("");
 
 onMounted(async () => {
-  const response = await axios.get("https://restcountries.com/v3.1/all");
+  const response = await axios.get("src/curl/countries.json");
   data.value = response.data;
 });
 </script>

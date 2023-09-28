@@ -10,7 +10,7 @@ onMounted(() => {
 <template>
   <div class="card-pays">
     <p>{{ pays.name.common }}</p>
-    <img :src="pays.flags.svg" alt="" />
+    <img :src="`/public/flags/${pays.cca2}.png`" alt="" />
     <router-link :to="`/pays/${pays.name.common}`">VOIR FICHE</router-link>
   </div>
 </template>

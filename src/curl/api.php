@@ -24,4 +24,4 @@ if ($httpCode != 200) {
 
 curl_close($query);
 
-file_put_contents("countries.json", $result);
+file_put_contents("src/curl/countries.json", $result);

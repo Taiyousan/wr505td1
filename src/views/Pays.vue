@@ -2,18 +2,6 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import CardPays from "../components/CardPays.vue";
-const listePays = [
-  "France",
-  "Espagne",
-  "Italie",
-  "Allemagne",
-  "Portugal",
-  "Belgique",
-  "Suisse",
-  "Royaume-Uni",
-  "Pays-Bas",
-  "Autriche",
-];
 
 let data = ref("");
 let search = ref("");
@@ -32,11 +20,9 @@ const searching = () => {
 };
 
 // à finir
-const selectSuggestion = (pays) => {
-  searchResult.value = data.value.filter((pays) => {
-    return pays.name.common.toLowerCase().includes(search.value.toLowerCase());
-  });
-};
+function searchSuggestions(pays) {
+  searchResult.value = [pays];
+}
 </script>
 
 <template>
@@ -99,5 +85,9 @@ const selectSuggestion = (pays) => {
 .container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.suggestion-item {
+  cursor: pointer;
 }
 </style>

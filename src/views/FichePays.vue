@@ -1,19 +1,15 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { computed, ref, onMounted, toRaw } from "vue";
-import axios from "axios";
+import data from "../curl/countries.json";
 
 const route = useRoute();
 const paysName = computed(() => route.params.id);
 
-let data = ref("");
 let country = ref("");
 
-onMounted(async () => {
-  const response = await fetch("../src/curl/countries.json");
-  data.value = await response.json();
-
-  country.value = data.value.find(
+onMounted(() => {
+  country.value = data.find(
     (pays) => pays.cca2 === paysName.value.toUpperCase()
   );
   console.log(toRaw(country.value));

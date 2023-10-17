@@ -7,27 +7,29 @@ const route = useRoute();
 const paysName = computed(() => route.params.id);
 
 let data = ref("");
+let country = ref("");
 
 onMounted(async () => {
-  const response = await axios.get(
-    `https://restcountries.com/v3.1/name/${paysName.value}`
+  const response = await fetch("../src/curl/countries.json");
+  data.value = await response.json();
+
+  country.value = data.value.find(
+    (pays) => pays.cca2 === paysName.value.toUpperCase()
   );
-  data.value = response.data;
-  console.log(toRaw(data.value));
+  console.log(toRaw(country.value));
 });
 </script>
 
 <template>
   <div class="fiche-pays">
     <h1>Fiche pays :</h1>
-    <div v-for="pays in data">
-      <ul>
-        <li>{{ pays.name.common }}</li>
-        <li>{{ pays.name.common }}</li>
-        <li>{{ pays.name.common }}</li>
-        <li>{{ pays.name.common }}</li>
-      </ul>
-    </div>
+    <ul v-if="country">
+      <!-- <li>{{ country.name.common }}</li>
+      <li>{{ country.name.common }}</li>
+      <li>{{ country.name.common }}</li>
+      <li>{{ country.name.common }}</li> -->
+      <li>{{ country.name.common }}</li>
+    </ul>
   </div>
 </template>
 

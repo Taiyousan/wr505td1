@@ -2,25 +2,27 @@
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import CardPays from "../components/CardPays.vue";
-const listePays = [
-  "France",
-  "Espagne",
-  "Italie",
-  "Allemagne",
-  "Portugal",
-  "Belgique",
-  "Suisse",
-  "Royaume-Uni",
-  "Pays-Bas",
-  "Autriche",
-];
 
 let data = ref("");
+let search = ref("");
+let searchResult = ref("");
 
 onMounted(async () => {
   const response = await axios.get("src/curl/countries.json");
   data.value = response.data;
+  searchResult.value = data.value;
 });
+
+const searching = () => {
+  searchResult.value = data.value.filter((pays) => {
+    return pays.name.common.toLowerCase().includes(search.value.toLowerCase());
+  });
+};
+
+// à finir
+function searchSuggestions(pays) {
+  searchResult.value = [pays];
+}
 </script>
 
 <template>
@@ -35,8 +37,24 @@ onMounted(async () => {
         </div>
       </div>
     </div> -->
+
+    <div>
+      <div class="search-container">
+        <input type="text" v-model="search" v-on:keyup="searching" />
+        <div v-if="search && searchResult.length" class="suggestions">
+          <div
+            v-for="pays in searchResult"
+            :key="pays.cca3"
+            class="suggestion-item"
+            @click="searchSuggestions(pays)"
+          >
+            {{ pays.name.common }}
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
-      <div v-for="pays in data">
+      <div v-for="pays in searchResult">
         <CardPays :pays="pays" />
       </div>
     </div>
@@ -67,5 +85,9 @@ onMounted(async () => {
 .container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.suggestion-item {
+  cursor: pointer;
 }
 </style>
